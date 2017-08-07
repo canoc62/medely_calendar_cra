@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddEventForm from './../components/AddEventForm';
 import { connect } from 'react-redux';
 import { addEvent } from './../actions/events';
+import { SECONDS_IN_MINUTE, SECONDS_IN_NINE_HOURS} from './../actions/constants';
 
 class AddEventFormContainer extends Component {
   constructor() {
@@ -9,8 +10,8 @@ class AddEventFormContainer extends Component {
 
     this.state = {
       eventName: '',
-      startTime: '',
-      endTime: '',
+      startTime: 32400,
+      endTime: 32460,
       invalidInput: false
     }
 
@@ -24,20 +25,21 @@ class AddEventFormContainer extends Component {
   }
 
   validateEvent() {
-    const eventStartTime = parseInt(this.state.startTime);
-    const eventEndTime = parseInt(this.state.endTime);
+    if (this.state.startTime >= this.state.endTime) {
+      return false;
+    }
 
-    if (eventStartTime < 0 || eventStartTime >= 720 ||
-        eventEndTime <= 0 || eventEndTime > 720 ) {
-          return false;
-        }
-    if (!this.props.events[this.state.startTime]) {
+    const adjustedStartTime = (this.state.startTime - SECONDS_IN_NINE_HOURS)/SECONDS_IN_MINUTE;
+    const adjustedEndTime = (this.state.endTime - SECONDS_IN_NINE_HOURS)/SECONDS_IN_MINUTE;
+
+    if (!this.props.events[adjustedStartTime]) {
 
       for (let event in this.props.events) {
         const currEvent = this.props.events[event];
-        const currEventStartTime = parseInt(currEvent.start);
+        const currEventStartTime = currEvent.start;
 
-        if (eventStartTime < currEventStartTime && eventEndTime > currEventStartTime) {
+        if (adjustedStartTime < currEventStartTime && 
+          adjustedEndTime > currEventStartTime) {
           return false;
         }
       }
@@ -66,20 +68,16 @@ class AddEventFormContainer extends Component {
     this.setState({eventName: e.target.value});
   }
 
-  handleStartTimeChange(e) {
-    this.setState({startTime: e.target.value});
+  handleStartTimeChange(time) {
+    this.setState({startTime: time});
   }
 
-  handleEndTimeChange(e) {
-    this.setState({endTime: e.target.value});
+  handleEndTimeChange(time) {
+    this.setState({endTime: time});
   }
 
   disabledSave() {
-    return (
-      this.state.eventName === '' ||
-      this.state.startTime === '' ||
-      this.state.endTime === ''
-    );
+    return this.state.eventName === '';
   }
 
   displayError() {

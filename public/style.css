@@ -1,3 +1,4 @@
+
 /* SCHEDULE CONTAINER */
 
 #schedule-container {
@@ -66,13 +67,30 @@
   text-align: center;
 }
 
+#event-form-time-label-container {
+  padding: 10px 0 0 0;
+}
+
 #event-form-name-input-container,
 #event-form-time-input-container {
   text-align: center;
 }
 
 #event-form-time-input-container {
-  padding: 20px 0 20px 0;
+  padding: 0 0 20px 0;
+}
+
+#event-form-time-label-container {
+  text-align: center;
+}
+
+#event-form-time-label-start,
+#event-form-time-label-end {
+  color: #bcc3ca;
+}
+
+#event-form-time-label-start {
+  margin-right: 120px;
 }
 
 #event-form-button-container {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormControl, Button } from 'react-bootstrap';
+import TimePicker from 'react-bootstrap-time-picker';
 
 const AddEventForm = (props) => {
   return (
@@ -16,21 +17,25 @@ const AddEventForm = (props) => {
           style={{display: "block", width: '350px', margin: '0 auto'}}
         />
       </div>
+      <div id="event-form-time-label-container">
+        <label id="event-form-time-label-start">Start Time</label>
+        <label id="event-form-time-label-end">End Time</label>
+      </div>
       <div id="event-form-time-input-container">
-        <FormControl
-          type="text"
+        <TimePicker 
+          start="9:00" 
+          end="20:59"
+          step={1}
           value={props.startTime}
-          placeholder="Start Time"
           onChange={props.handleStartTimeChange}
-          style={{display: "inline-block", width: '160px', marginRight: '28px'}}
-        />
-        <FormControl
-          type="text"
+          style={{display: "inline-block", width: '160px', marginRight: '28px'}}/>
+        <TimePicker
+          start="9:01"
+          end="21:00"
+          step={1}
           value={props.endTime}
-          placeholder="End Time"
           onChange={props.handleEndTimeChange}
-          style={{display: "inline-block", width: '160px'}}
-        />
+          style={{display: "inline-block", width: '160px'}}/>
       </div>
       <div id="event-form-button-container">
         <Button 

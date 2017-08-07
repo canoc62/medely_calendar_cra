@@ -7,7 +7,7 @@ const Schedule = ({events}) => {
     const newEventComponent = (
     <Event 
       eventName={currEvent.eventName}
-      start={parseInt(currEvent.start)}
+      start={currEvent.start}
       height={currEvent.duration}
       key={currEvent.eventName+currEvent.start+currEvent.duration}
     />);
